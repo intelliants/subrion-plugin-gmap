@@ -12,7 +12,9 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 		'articles' => array('submit_article', 'edit_article', 'view_article'),
 		//'estates' => array('estate_submit', 'estate_edit'),
 		'listings' => array('add_listing', 'edit_listing', 'view_listing'),
-		'ypages' => array('ypage_add', 'ypage_edit', 'ypage_view')
+		'ypages' => array('ypage_add', 'ypage_edit', 'ypage_view'),
+		'coupons' => array('coupon_add', 'coupon_edit', 'coupon_view'),
+		'shops' => array('shop_view'),
 	);
 
 	$iaItem = $iaCore->factory('item');

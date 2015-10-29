@@ -1,7 +1,7 @@
 $(function()
 {
     intelli.marker = null;
-	var mapInfo = $('#item-gmap-data');
+	var mapInfo = $('.js-gmap-data');
 	if (mapInfo.length)
 	{
 		if ($('#fieldgroup_ypage_location').length > 0)
@@ -124,7 +124,7 @@ $(function()
 
 	function getInfoWindowContent(o)
 	{
-		if (o.title) html = '<h3><a href="' + o.url + '"><strong>' + o.title +'</strong></a></h3><p>' + o.description + '</p>';
+		if (o.title) html = '<a href="' + o.url + '"><strong>' + o.title +'</strong></a><p>' + o.description + '</p>';
 		else html = '<p><a href="' + o.url + '">' + o.description + '</a></p>';
 		return '<div style="width: 250px">' + html + '</div>';
 	}

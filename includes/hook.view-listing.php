@@ -8,31 +8,14 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 		return;
 	}
 
+	$mapData = array('id' => $listing, 'item' => $item, 'listing' => array());
+
 	$iaItem = $iaCore->factory('item');
-	$enabledItems = $iaItem->getEnabledItemsForPlugin('gmap');
-
-	// FIXME: temporal solution for Coupons Package
-	if ('coupons' == $item && in_array('shops', $enabledItems))
-	{
-		$enabledItems[] = 'coupons';
-	}
-
-	if (!in_array($item, $enabledItems))
-	{
-		return;
-	}
+	$iaUsers = $iaCore->factory('users');
 
 	if ($item == iaUsers::getItemName())
 	{
-		$itemData = $iaCore->factory('users')->getInfo($listing);
-	}
-	// FIXME: temporal solution for Coupons Package
-	elseif ('coupons' == $item)
-	{
-		$item = 'shops';
-		$itemPackage = $iaItem->getPackageByItem($item);
-		$itemClass = $iaCore->factoryPackage('item', $itemPackage, iaCore::FRONT, $item);
-		$itemData = $itemClass->getById($listing);
+		$itemData = $iaUsers->getInfo($listing);
 	}
 	else
 	{
@@ -41,9 +24,28 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 		$itemData = $itemClass->getById($listing);
 	}
 
-	// actually this code is seem to be written to work with the Yellowpages package.
-	// FIXME: the common solution should be found
+	// get author information
+	if ($itemData && isset($itemData['member_id']) && $itemData['member_id'])
+	{
+		if ($mapData['author'] = $iaUsers->getInfo($itemData['member_id']))
+		{
+			$mapData['author']['description'] =
+				($mapData['author']['address'] ? $mapData['author']['address'] . ',<br>' : '') .
+				($mapData['author']['city'] ? $mapData['author']['city'] . ',' : '') .
+				($mapData['author']['state'] ? $mapData['author']['state'] . ',<br>' : '') .
+				($mapData['author']['country'] ? $mapData['author']['country'] : '');
+		}
+	}
 
+	$enabledItems = $iaItem->getEnabledItemsForPlugin('gmap');
+	if (!in_array($item, $enabledItems))
+	{
+		$iaView->assign('gmap_data', $mapData);
+
+		return;
+	}
+
+	// yellow pages specific code
 	if (empty($itemData['state']) && empty($itemData['city']) && isset($itemData['loc_id']))
 	{
 		$sql = "SELECT l1.*, l2.`title` `parent_title`, l2.`abbreviation` `abbr` ";
@@ -63,7 +65,8 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 	if ($itemData)
 	{
 		$fieldsList = array('zipcode', 'country', 'state', 'city', 'address', 'latitude', 'longitude');
-		$mapData = array('id' => $listing, 'item' => $item, 'listing' => $itemData);
+
+		$mapData['listing'] = $itemData;
 
 		foreach ($fieldsList as $fieldName)
 		{
@@ -87,7 +90,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 				($mapData['city'] ? $mapData['city'] . ', ' : '') .
 				($mapData['address'] ? $mapData['address'] . ', ' : '');
 		}
-
-		$iaView->assign('gmap_data', $mapData);
 	}
+
+	$iaView->assign('gmap_data', $mapData);
 }
