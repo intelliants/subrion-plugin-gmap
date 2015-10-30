@@ -23,6 +23,7 @@
 	<config configgroup="miscellaneous" type="divider" name="gmap_plugin">Google Map</config>
 	<config configgroup="miscellaneous" name="gmap_items_enabled" type="itemscheckbox" description="List of items Google Map is enabled for"><![CDATA[]]></config>
 	<config configgroup="miscellaneous" name="gmap_items_implemented" type="hidden">members,autos,articles,listings,ypages,shops</config>
+	<config configgroup="miscellaneous" name="gmap_api_key" type="text" description="Google Maps API key"><![CDATA[]]></config>
 
 	<hooks>
 		<hook name="smartyListingSubmitBeforeFooter" type="smarty" filename="plugins/gmap/templates/common/manage-map.tpl"><![CDATA[]]></hook>

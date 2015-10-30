@@ -7,7 +7,7 @@
 		</div>
 		
 		<label id="js-gmap-annotation" class="col col-lg-2 control-label">{lang key='drag_and_drop_marker'}</label>
-		<div id="js-gmap-renderer" class="col col-lg-8"></div>
+		<div id="js-gmap-renderer" class="gmap-renderer col col-lg-8"></div>
 	</div>
 
 	{ia_print_css files='_IA_URL_plugins/gmap/templates/common/css/style'}

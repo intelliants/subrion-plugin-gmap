@@ -1,6 +1,11 @@
-#js-gmap-renderer {
+.gmap-renderer {
 	min-height: 300px;
 }
-#js-gmap-renderer img {
-	max-width: none;
+
+.gmap-infowindow {
+	max-width: 160px;
+}
+
+.gmap-infowindow span {
+	display: block;
 }

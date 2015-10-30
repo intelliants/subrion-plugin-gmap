@@ -1,131 +1,94 @@
-$(function()
-{
-	intelli.marker = null;
-	var mapInfo = $('.js-gmap-data');
-	if (mapInfo.length)
-	{
-		if ($('#fieldgroup_ypage_location').length > 0)
-		{
-			$('#js-gmap-renderer').appendTo('#fieldgroup_ypage_location');
-		}
-		else
-		{
-			$('#js-gmap-renderer').appendTo('#fieldgroup_location');
-		}
+var $elems = [];
 
-		$('#js-gmap-renderer').removeClass('hidden');
+function mapInit() {
+	$elems.each(function() {
+		showMap($(this));
+	});
+}
 
-		var map = new google.maps.Map(document.getElementById('js-gmap-renderer'), {mapTypeId: google.maps.MapTypeId.ROADMAP});
-		var bounds = new google.maps.LatLngBounds();
-		var geocoder = new google.maps.Geocoder();
-		var infowindows = [];
-		var markersCount = mapInfo.length;
-		var address = mapInfo.data('address');
-		var city = mapInfo.data('city');
-		var state = mapInfo.data('state');
-		var zip = mapInfo.data('zip');
-		var country = mapInfo.data('country');
-		var title = mapInfo.data('title');
-		var description = mapInfo.data('description');
-		var url = mapInfo.data('url');
+function showMap(elem) {
+	var $this = elem,
+		mapFor = ('author' == $this.data('map-for')) ? 'author' : 'item';
 
-		var fullAddress = address + ' ' + city + ', ' + state + ' ' + zip + ', ' + country;
-		var lat = mapInfo.data('lat');
-		var lng = mapInfo.data('lng');
-		var zoom = mapInfo.data('zoom');
-
-		if ('' != lat && 'undefined' != typeof lat && '' != lng && 'undefined' != typeof lng)
-		{
-			var html = '';
-			var point =	new google.maps.LatLng(lat * 1, lng * 1);
-
-			intelli.marker = new google.maps.Marker({
-				position: point, 
-				map: map,
-				title: title
-			});
-			intelli.marker.setMap(map);
-			bounds.extend(point);
-			if ('' != zoom)
-			{
-				map.setZoom(zoom * 1);
-			}
-			if (markersCount > 1)
-				map.fitBounds(bounds);
-			else
-				map.setCenter(point);
-
-			infowindows = new google.maps.InfoWindow(
-			{
-				content: getInfoWindowContent({url: url, title: title, description: description ? description : ''})
-			});
-
-			google.maps.event.addListener(intelli.marker, 'click', function()
-			{
-				$.each(infowindows, function(a, b)
-				{
-					if (b)
-					{
-						b.close();
-					}
-				});
-				infowindows.open(map, intelli.marker);
-			});
-		}
-		else
-		{
-			if ('' != fullAddress.split(' ').join('').replace(/\,/g, ''))
-			{
-				geocoder.geocode({'address': fullAddress}, function(results, status)
-				{
-					if (status == google.maps.GeocoderStatus.OK)
-					{
-						intelli.marker = new google.maps.Marker({
-							map: map,
-							position: results[0].geometry.location
-						});
-						bounds.extend(results[0].geometry.location);
-						if ('' != zoom)
-						{
-							map.setZoom(zoom * 1);
-						}
-						if (markersCount > 1)
-							map.fitBounds(bounds);
-						else
-							map.setCenter(results[0].geometry.location);
-						infowindows = new google.maps.InfoWindow({
-							content: getInfoWindowContent({url: url, title: title, description: description})
-						});
-
-						google.maps.event.addListener(intelli.marker, 'click', function()
-						{
-							infowindows.open(map, intelli.marker);
-						});
-					}
-				});
-			}
+	if ('author' != mapFor) {
+		if ($('#fieldgroup_ypage_location').length > 0) {
+			$this.appendTo('#fieldgroup_ypage_location');
+		} else {
+			$this.appendTo('#fieldgroup_location');
 		}
 	}
 
-	intelli.map = map;
+	$this.removeClass('hidden');
 
-	$("a[href='#tab-fieldgroup_location']").click(function()
-	{
-		setTimeout(function()
-		{
-			google.maps.event.trigger(intelli.map, 'resize');
+	// the map
+	var lat = $this.data('lat'),
+		lng = $this.data('lng'),
+		latLng = {},
+		fullAddress = $this.data('address') + ' ' + $this.data('city') + ', ' + $this.data('state') + ' ' + $this.data('zip') + ', ' + $this.data('country');
 
-			if (intelli.marker !== null)
-			{
-				intelli.map.setCenter(intelli.marker.getPosition());
-			}
-		}, 300);
-	});
+	var placeMap = function() {
+		var map = new google.maps.Map(elem.get(0), {
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+				zoom: $this.data('zoom'),
+				center: latLng
+			}),
+			marker = new google.maps.Marker({
+				position: latLng,
+				map: map
+			}),
+			infowindow = new google.maps.InfoWindow({
+				content: '<div class="gmap-infowindow"><span><b><a href="' + $this.data('url') + '">' + $this.data('title') + '</a></b></span>' + '<span>' + $this.data('description') + '</span></div>'
+			});
 
-	function getInfoWindowContent(o)
-	{
-		if (o.title) html = '<a href="' + o.url + '"><strong>' + o.title +'</strong></a><p>' + o.description + '</p>';
-		else html = '<p><a href="' + o.url + '">' + o.description + '</a></p>';
-		return '<div style="width: 250px">' + html + '</div>';
+		marker.addListener('click', function() {
+			infowindow.open(map, marker);
+		});
+	}
+
+	if ('' != lat && '' != lng) {
+		latLng = {lat: lat, lng: lng}
+		placeMap();
+	} else {
+		var geocoder = new google.maps.Geocoder();
+
+		if ('' != fullAddress.split(' ').join('').replace(/\,/g, '')) {
+			geocoder.geocode({'address': fullAddress}, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					latLng = {
+						lat: parseFloat(results[0].geometry.location.lat()),
+						lng: parseFloat(results[0].geometry.location.lng())
+					}
+
+					placeMap();
+				}
+			});
+		}
+	}
+}
+
+function loadScript(url, handler) {
+	var tag = document.createElement('script');
+
+	tag.type = 'text/javascript';
+	tag.src = url;
+	tag.onreadystatechange = function(){if(this.readyState == 'complete' || this.readyState == 'loaded') this.onload({target: this});};
+	tag.onload = handler;
+
+	document.getElementsByTagName('head')[0].appendChild(tag);
+}
+
+$(function() {
+	$elems = $('.js-gmap');
+
+	if (typeof google === 'object' && typeof google.maps === 'object') {
+		mapInit();
+	} else {
+		var apiKey = intelli.config.gmap_api_key;
+
+		if ('' != apiKey) {
+			loadScript('http://maps.googleapis.com/maps/api/js?key=' + apiKey + '&sensor=false&callback=mapInit');
+		} else {
+			loadScript('http://maps.googleapis.com/maps/api/js?sensor=false&callback=mapInit');
+		}
 	}
 });
