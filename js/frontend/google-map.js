@@ -1,6 +1,6 @@
 $(function()
 {
-    intelli.marker = null;
+	intelli.marker = null;
 	var mapInfo = $('.js-gmap-data');
 	if (mapInfo.length)
 	{

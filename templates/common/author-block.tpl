@@ -2,7 +2,7 @@
 	<div class="ia-item-author__location">
 		{ia_block name='gmap' header=false}
 			<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-			<div class="js-gmap-data hidden"
+			<div class="js-gmap-data hidden" id="author-{$gmap_data.author.id}"
 				 data-item-id="{$gmap_data.author.id}"
 				 data-title="{$gmap_data.author.fullname}"
 				 data-description="{$gmap_data.author.description}"
