@@ -65,7 +65,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 					{
 						if ('latitude' != $field && 'longitude' != $field)
 						{
-							$data = array(
+							$row = array(
 								'fieldgroup_id' => $group,
 								'name' => $field,
 								'item' => $itemName,
@@ -76,18 +76,18 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 								'order' => $order++,
 								'extras' => $plugin
 							);
-							$fieldId = $iaDb->insert($data, null, iaField::getTable());
+							$fieldId = $iaDb->insert($row, null, iaField::getTable());
 
 							if (isset($pages[$itemName]))
 							{
 								foreach ($pages[$itemName] as $page)
 								{
-									$data = array(
+									$row = array(
 										'page_name' => $page,
 										'field_id' => $fieldId,
 										'extras' => $package
 									);
-									$iaDb->insert($data, null, iaField::getTablePages());
+									$iaDb->insert($row, null, iaField::getTablePages());
 								}
 							}
 						}
