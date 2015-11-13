@@ -24,8 +24,10 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 		$itemData = $itemClass->getById($listing);
 	}
 
+	$enabledItems = $iaItem->getEnabledItemsForPlugin('gmap');
+
 	// get author information
-	if ($itemData && isset($itemData['member_id']) && $itemData['member_id'])
+	if (in_array(iaUsers::getItemName(), $enabledItems) && $itemData && isset($itemData['member_id']) && $itemData['member_id'] )
 	{
 		if ($mapData['author'] = $iaUsers->getInfo($itemData['member_id']))
 		{
@@ -37,7 +39,6 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 		}
 	}
 
-	$enabledItems = $iaItem->getEnabledItemsForPlugin('gmap');
 	if (!in_array($item, $enabledItems))
 	{
 		$iaView->assign('gmap_data', $mapData);
