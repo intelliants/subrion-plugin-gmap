@@ -1,6 +1,7 @@
 var $elems = [];
 
 function mapInit() {
+	$(document).trigger('mapsLoaded');
 	$elems.each(function() {
 		showMap($(this));
 	});
@@ -84,9 +85,9 @@ $(function() {
 		mapInit();
 	} else {
 		if (intelli.config.gmap_api_key) {
-			loadScript('http://maps.googleapis.com/maps/api/js?key=' + intelli.config.gmap_api_key + '&sensor=false&callback=mapInit');
+			loadScript('http://maps.googleapis.com/maps/api/js?key=' + intelli.config.gmap_api_key + '&callback=mapInit');
 		} else {
-			loadScript('http://maps.googleapis.com/maps/api/js?sensor=false&callback=mapInit');
+			loadScript('http://maps.googleapis.com/maps/api/js?callback=mapInit');
 		}
 	}
 });
