@@ -12,22 +12,22 @@ $(function()
 		$('#address_fieldzone').parent().append($('#js-gmap-wrapper'));
 		$('#js-gmap-wrapper').removeClass('hidden');
 
-
 		var map = new google.maps.Map(document.getElementById('js-gmap-renderer'), {mapTypeId: google.maps.MapTypeId.ROADMAP});
-		var geocoder = new google.maps.Geocoder();
+		var geocoder = new google.maps.Geocoder(),
+			geoOptions = {};
 
 		if (itemPosition.lat.length != 0 && itemPosition.lng.length != 0)
 		{
 			map.setZoom(11);
-			geooptions = {latLng: new google.maps.LatLng(parseFloat(itemPosition.lat), parseFloat(itemPosition.lng))};
+			geoOptions = {latLng: new google.maps.LatLng(parseFloat(itemPosition.lat), parseFloat(itemPosition.lng))};
 		}
 		else
 		{
 			map.setZoom(3);
-			geooptions = {address: 'USA'};
+			geoOptions = {address: 'USA'};
 		}
 
-		geocoder.geocode(geooptions, function(results, status)
+		geocoder.geocode(geoOptions, function(results, status)
 		{
 			if (status == google.maps.GeocoderStatus.OK)
 			{

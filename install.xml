@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <plugin name="gmap">
 	<title>Google Map</title>
 	<summary>Makes possible to display the Google Map for listings</summary>
 	<author>Intelliants LLC</author>
 	<contributor>Intelliants LLC</contributor>
-	<version>4.0.0</version>
-	<date>2015-10-29</date>
-	<compatibility>4.0</compatibility>
+	<version>4.0.1</version>
+	<date>2016-02-09</date>
+	<compatibility>4.0.4</compatibility>
 
 	<phrases>
 		<phrase category="common" key="fieldgroup_location">Location</phrase>
@@ -20,18 +20,19 @@
 		<phrase category="common" key="drag_and_drop_marker">Drag and drop the marker to adjust location:</phrase>
 	</phrases>
 
-	<config configgroup="miscellaneous" type="divider" name="gmap_plugin">Google Map</config>
-	<config configgroup="miscellaneous" name="gmap_items_enabled" type="itemscheckbox" description="List of items Google Map is enabled for"><![CDATA[]]></config>
-	<config configgroup="miscellaneous" name="gmap_items_implemented" type="hidden">members,autos,articles,listings,ypages,shops</config>
-	<config configgroup="miscellaneous" name="gmap_api_key" type="text" description="Google Maps API key" private="0"><![CDATA[]]></config>
+	<configgroup name="gmap">Google Map</configgroup>
+	<config group="gmap" type="divider">Google Map</config>
+	<config group="gmap" name="gmap_items_enabled" type="itemscheckbox" description="List of items Google Map is enabled for"><![CDATA[]]></config>
+	<config group="gmap" name="gmap_items_implemented" type="hidden">members,autos,articles,listings,venues,shops</config>
+	<config group="gmap" name="gmap_api_key" type="text" description="Google Maps API key" private="0"><![CDATA[]]></config>
 
 	<hooks>
-		<hook name="smartyListingSubmitBeforeFooter" type="smarty" filename="plugins/gmap/templates/common/manage-map.tpl"><![CDATA[]]></hook>
-		<hook name="smartyAdminSubmitItemBeforeFooter" type="smarty" filename="plugins/gmap/templates/admin/manage-map.tpl"><![CDATA[]]></hook>
-		<hook name="smartyViewListingAuthorBlock" type="smarty" filename="plugins/gmap/templates/common/author-block.tpl"><![CDATA[]]></hook>
-		<hook name="smartyViewListingBeforeFooter" type="smarty" filename="plugins/gmap/templates/common/map.tpl"><![CDATA[]]></hook>
-		<hook name="phpViewListingBeforeStart" type="php" page_type="front" filename="plugins/gmap/includes/hook.view-listing.php"><![CDATA[]]></hook>
-		<hook name="phpItemSaved" type="php" filename="plugins/gmap/includes/hook.item-saved.php"><![CDATA[]]></hook>
-		<hook name="phpPackageItemChangedForPlugin" type="php" page_type="admin" filename="plugins/gmap/includes/hook.item-configuration.php"><![CDATA[]]></hook>
+		<hook name="smartyListingSubmitBeforeFooter" type="smarty" filename="hook.manage-map"><![CDATA[]]></hook>
+		<hook name="smartyAdminSubmitItemBeforeFooter" type="smarty" filename="hook.manage-map"><![CDATA[]]></hook>
+		<hook name="smartyViewListingAuthorBlock" type="smarty" filename="hook.author-block"><![CDATA[]]></hook>
+		<hook name="smartyViewListingBeforeFooter" type="smarty" filename="hook.map"><![CDATA[]]></hook>
+		<hook name="phpViewListingBeforeStart" type="php" page_type="front" filename="hook.view-listing"><![CDATA[]]></hook>
+		<hook name="phpItemSaved" type="php" filename="hook.item-saved"><![CDATA[]]></hook>
+		<hook name="phpPackageItemChangedForPlugin" type="php" page_type="admin" filename="hook.item-configuration"><![CDATA[]]></hook>
 	</hooks>
 </plugin>

@@ -8,35 +8,29 @@ $(function()
 		lng: $('input[name="longitude"]', mapInfo).val()
 	};
 
-	if ($('#fieldgroup_ypage_location').length > 0)
-	{
-		$('#js-gmap-annotation').appendTo('#fieldgroup_ypage_location');
-		$('#js-gmap-renderer').appendTo('#fieldgroup_ypage_location');
-	}
-	else
-	{
-		$('#js-gmap-annotation').appendTo('#fieldgroup_location');
-		$('#js-gmap-renderer').appendTo('#fieldgroup_location');
-	}
+	var $o = $('#js-gmap-annotation, #js-gmap-renderer');
 
-	$('#js-gmap-annotation').removeClass('hidden');
-	$('#js-gmap-renderer').removeClass('hidden');
+	($('#fieldgroup_venue_location').length > 0)
+		? $o.appendTo('#fieldgroup_venue_location')
+		: $o.appendTo('#fieldgroup_location');
+	$o.removeClass('hidden');
 
 	var map = new google.maps.Map(document.getElementById('js-gmap-renderer'), {mapTypeId: google.maps.MapTypeId.ROADMAP});
-	var geocoder = new google.maps.Geocoder();
+	var geocoder = new google.maps.Geocoder(),
+		geoOptions = {};
 
 	if (itemPosition.lat.length != 0 && itemPosition.lng.length != 0)
 	{
 		map.setZoom(11);
-		geooptions = {latLng: new google.maps.LatLng(parseFloat(itemPosition.lat), parseFloat(itemPosition.lng))};
+		geoOptions = {latLng: new google.maps.LatLng(parseFloat(itemPosition.lat), parseFloat(itemPosition.lng))};
 	}
 	else
 	{
 		map.setZoom(3);
-		geooptions = {address: 'USA'};
+		geoOptions = {address: 'USA'};
 	}
 
-	geocoder.geocode(geooptions, function(results, status)
+	geocoder.geocode(geoOptions, function(results, status)
 	{
 		if (status == google.maps.GeocoderStatus.OK)
 		{

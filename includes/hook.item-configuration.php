@@ -12,7 +12,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 		'articles' => array('submit_article', 'edit_article', 'view_article'),
 		//'estates' => array('estate_submit', 'estate_edit'),
 		'listings' => array('add_listing', 'edit_listing', 'view_listing'),
-		'ypages' => array('ypage_add', 'ypage_edit', 'ypage_view'),
+		'venues' => array('venue_add', 'venue_edit', 'venue_view'),
 		'coupons' => array('coupon_add', 'coupon_edit', 'coupon_view'),
 		'shops' => array('shop_view'),
 	);
@@ -76,6 +76,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 								'order' => $order++,
 								'extras' => $plugin
 							);
+
 							$fieldId = $iaDb->insert($row, null, iaField::getTable());
 
 							if (isset($pages[$itemName]))
@@ -87,6 +88,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 										'field_id' => $fieldId,
 										'extras' => $package
 									);
+
 									$iaDb->insert($row, null, iaField::getTablePages());
 								}
 							}
