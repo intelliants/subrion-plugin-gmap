@@ -5,8 +5,8 @@
 		<input type="hidden" name="latitude" value="{if isset($smarty.post.latitude)}{$smarty.post.latitude}{elseif isset($item.latitude)}{$item.latitude}{/if}">
 	</div>
 
-	<p id="js-gmap-annotation" class="text-small muted hidden">{lang key='drag_and_drop_marker'}</p>
-	<div id="js-gmap-renderer" class="full-width hidden"></div>
+	<label id="js-gmap-annotation" class="hidden">{lang key='drag_and_drop_marker'}</label>
+	<div id="js-gmap-renderer" class="m-b hidden" style="height: 250px;"></div>
 
 	{ia_print_css files='_IA_URL_plugins/gmap/templates/front/css/style'}
 	{ia_print_js files='_IA_URL_plugins/gmap/js/frontend/manage-google-map' order=3}
