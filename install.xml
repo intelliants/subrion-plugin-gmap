@@ -20,7 +20,8 @@
 	<config group="gmap" name="gmap_items_implemented" type="hidden">members,autos,articles,listings,venues,shops</config>
 	<config group="gmap" name="gmap_api_key" type="text" description="Google Maps API key" private="0"><![CDATA[]]></config>
 	<config group="gmap" type="divider">Google Map</config>
-	<config group="gmap" name="gmap_draggable" type="radio" values="1,0" description="Draggable" private="0">0</config>
+	<config group="gmap" name="gmap_draggable" type="radio" values="1,0" description="Draggable" private="0">1</config>
+	<config group="gmap" name="gmap_scrollable" type="radio" values="1,0" description="Scrollable" private="0">0</config>
 	<config group="gmap" name="gmap_ui" type="radio" values="1,0" description="Show map controls" private="0">0</config>
 	<config group="gmap" name="gmap_type" type="select" values="roadmap,satellite,hybrid,terrain" description="Map type" private="0">roadmap</config>
 	<config group="gmap" name="gmap_style" type="select" values="default,blue-water,midnight-commander,pale-down,retro,subtle-grayscale" description="Style">blue-water</config>
