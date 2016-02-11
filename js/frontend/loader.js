@@ -4,7 +4,7 @@ intelli.gm = function()
 		geocoder = new google.maps.Geocoder();
 
 	var options = {zoom: 8, center: new google.maps.LatLng(0, 0), mapTypeId: intelli.config.gmap_type,
-		disableDefaultUI: (1 != intelli.config.gmap_ui), draggable: intelli.config.gmap_draggable, scrollwheel: intelli.config.gmap_scrollable,};
+		disableDefaultUI: (1 != intelli.config.gmap_ui), draggable: intelli.config.gmap_draggable, scrollwheel: intelli.config.gmap_scrollable};
 	if ('default' != paramsEl.getAttribute('data-skin'))
 	{
 		options.styles = gmStyles[paramsEl.getAttribute('data-skin')];
