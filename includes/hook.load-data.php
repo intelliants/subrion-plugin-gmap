@@ -5,7 +5,12 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 {
 	if ($iaView->blockExists('listings_on_map'))
 	{
-		$data = array();
+		$params = array(
+			'items' => array(),
+			'language' => $iaView->language,
+			'location' => is_string($iaView->get('location')) ? $iaView->get('location') : null,
+			'style' => $iaCore->get('gmap_style')
+		);
 
 		if ($listings = $iaView->getValues('listings'))
 		{
@@ -25,13 +30,18 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 						empty($listing['venue_title']) || $entry['title'] = $listing['venue_title'];
 					}
 
-					$data[] = $entry;
+					$params['items'][] = $entry;
 				}
 			}
+
+			$params['items'] = iaUtil::jsonEncode($params['items']);
 		}
 
-		$data = iaUtil::jsonEncode($data);
+		$iaView->assign('gmap', $params);
 
-		$iaView->assign('listingsOnMap', $data);
+		if ('default' != $params['style'])
+		{
+			$iaView->add_js('_IA_URL_plugins/gmap/js/frontend/styles');
+		}
 	}
 }

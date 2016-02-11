@@ -1,13 +1,17 @@
 intelli.gm = function()
 {
 	var paramsEl = document.getElementById('js-gm-data');
-	var options = {zoom: 8, center: new google.maps.LatLng(0, 0)};
+	var options = {zoom: 8, center: new google.maps.LatLng(0, 0), disableDefaultUI: (1 != intelli.config.gmap_ui)};
 
 	var geocoder = new google.maps.Geocoder();
 
 	this.region = paramsEl.getAttribute('data-location');
 	this.data = JSON.parse(paramsEl.innerHTML);
 
+	if ('default' != paramsEl.getAttribute('data-skin'))
+	{
+		options.styles = gmStyles[paramsEl.getAttribute('data-skin')];
+	}
 	if (1 == this.data.length)
 	{
 		options.mapTypeId = google.maps.MapTypeId.HYBRID
