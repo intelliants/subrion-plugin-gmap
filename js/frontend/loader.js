@@ -1,21 +1,17 @@
 intelli.gm = function()
 {
-	var paramsEl = document.getElementById('js-gm-data');
-	var options = {zoom: 8, center: new google.maps.LatLng(0, 0), disableDefaultUI: (1 != intelli.config.gmap_ui)};
+	var paramsEl = document.getElementById('js-gm-data'),
+		geocoder = new google.maps.Geocoder();
 
-	var geocoder = new google.maps.Geocoder();
-
-	this.region = paramsEl.getAttribute('data-location');
-	this.data = JSON.parse(paramsEl.innerHTML);
-
+	var options = {zoom: 8, center: new google.maps.LatLng(0, 0), mapTypeId: intelli.config.gmap_type,
+		disableDefaultUI: (1 != intelli.config.gmap_ui), draggable: intelli.config.gmap_draggable};
 	if ('default' != paramsEl.getAttribute('data-skin'))
 	{
 		options.styles = gmStyles[paramsEl.getAttribute('data-skin')];
 	}
-	if (1 == this.data.length)
-	{
-		options.mapTypeId = google.maps.MapTypeId.HYBRID
-	}
+
+	this.region = paramsEl.getAttribute('data-location');
+	this.data = JSON.parse(paramsEl.innerHTML);
 
 	this.map = new google.maps.Map(document.getElementById('js-gm-canvas'), options);
 
