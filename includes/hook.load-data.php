@@ -33,9 +33,9 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 					$params['items'][] = $entry;
 				}
 			}
-
-			$params['items'] = iaUtil::jsonEncode($params['items']);
 		}
+
+		$params['items'] = iaUtil::jsonEncode($params['items']);
 
 		$iaView->assign('gmap', $params);
 
