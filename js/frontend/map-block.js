@@ -3,6 +3,9 @@ intelli.gm = function()
 	var paramsEl = document.getElementById('js-gm-data');
 	var options = {zoom: 8, center: new google.maps.LatLng(0, 0)};
 
+	var geocoder = new google.maps.Geocoder();
+
+	this.region = paramsEl.getAttribute('data-location');
 	this.data = JSON.parse(paramsEl.innerHTML);
 
 	if (1 == this.data.length)
@@ -13,6 +16,24 @@ intelli.gm = function()
 	this.map = new google.maps.Map(document.getElementById('js-gm-canvas'), options);
 
 	var self = this;
+
+	if (0 == this.data.length)
+	{
+		if (this.region)
+		{
+			geocoder.geocode({address: this.region}, function(results, status)
+			{
+				if (google.maps.GeocoderStatus.OK == status)
+				{
+					self.map.fitBounds(results[0].geometry.bounds);
+				}
+			});
+		}
+		else
+		{
+			return this;
+		}
+	}
 
 	var bounds = new google.maps.LatLngBounds();
 	var i;
