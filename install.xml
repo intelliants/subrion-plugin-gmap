@@ -5,8 +5,8 @@
 	<author>Intelliants LLC</author>
 	<contributor>Intelliants LLC</contributor>
 	<version>4.0.1</version>
-	<date>2016-02-10</date>
-	<compatibility>4.0.4</compatibility>
+	<date>2016-02-16</date>
+	<compatibility>4.0.5</compatibility>
 
 	<blocks>
 		<block type="smarty" name="listings_on_map" title="Listings on Map"
