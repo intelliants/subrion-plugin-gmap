@@ -4,8 +4,8 @@
 	<summary>Makes possible to display the Google Map for listings</summary>
 	<author>Intelliants LLC</author>
 	<contributor>Intelliants LLC</contributor>
-	<version>4.0.2</version>
-	<date>2016-03-10</date>
+	<version>4.0.3</version>
+	<date>2016-03-25</date>
 	<compatibility>4.0.5</compatibility>
 
 	<blocks>
@@ -34,6 +34,7 @@
 		<hook name="smartyViewListingBeforeFooter" type="smarty" filename="hook.map"><![CDATA[]]></hook>
 		<hook name="phpViewListingBeforeStart" type="php" page_type="front" filename="hook.view-listing"><![CDATA[]]></hook>
 		<hook name="phpItemSaved" type="php" filename="hook.item-saved"><![CDATA[]]></hook>
+		<hook name="phpAddItemAfterAll" type="php" filename="hook.item-saved"><![CDATA[]]></hook>
 		<hook name="phpPackageItemChangedForPlugin" type="php" page_type="admin" filename="hook.item-configuration"><![CDATA[]]></hook>
 	</hooks>
 
