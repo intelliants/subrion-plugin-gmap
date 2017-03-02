@@ -48,6 +48,16 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 		$itemName = $entry['item'];
 		$package = $iaItem->getPackageByItem($itemName);
 
+		iaLanguage::addPhrase(sprintf('fieldgroup_%s_location', $entry['item']), 'Location');
+
+		iaLanguage::addPhrase(sprintf('field_%s_zipcode', $entry['item']), 'ZIP Code');
+		iaLanguage::addPhrase(sprintf('field_%s_country', $entry['item']), 'Country');
+		iaLanguage::addPhrase(sprintf('field_%s_state', $entry['item']), 'State');
+		iaLanguage::addPhrase(sprintf('field_%s_city', $entry['item']), 'City');
+		iaLanguage::addPhrase(sprintf('field_%s_address', $entry['item']), 'Address');
+		iaLanguage::addPhrase(sprintf('field_%s_latitude', $entry['item']), 'Latitude');
+		iaLanguage::addPhrase(sprintf('field_%s_longitude', $entry['item']), 'Longitude');
+
 		switch ($entry['action'])
 		{
 			case '+':
@@ -63,7 +73,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 						'name' => 'location',
 						'item' => $itemName,
 						'order' => $order,
-						'extras' => $package,
+						'module' => $package,
 						'collapsed' => false,
 						'tabview' => true
 					), null, iaField::getTableGroups());
@@ -97,7 +107,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 								'status' => iaCore::STATUS_ACTIVE,
 								'editable' => false,
 								'order' => $order++,
-								'extras' => $plugin
+								'module' => $plugin
 							);
 
 							$fieldId = $iaDb->insert($row, null, iaField::getTable());
@@ -108,8 +118,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 								{
 									$row = array(
 										'page_name' => $page,
-										'field_id' => $fieldId,
-										'extras' => $package
+										'field_id' => $fieldId
 									);
 
 									$iaDb->insert($row, null, iaField::getTablePages());
@@ -126,7 +135,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 				break;
 
 			case '-':
-				$stmt = sprintf("`item` = '%s' AND `required` = 0 AND `extras` = '%s' AND `name` IN ('%s')", $itemName, $plugin, implode("', '", $fields));
+				$stmt = sprintf("`item` = '%s' AND `required` = 0 AND `module` = '%s' AND `name` IN ('%s')", $itemName, $plugin, implode("', '", $fields));
 				$iaDb->update(array('status' => iaCore::STATUS_APPROVAL), $stmt, null, iaField::getTable());
 		}
 	}

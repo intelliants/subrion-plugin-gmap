@@ -37,7 +37,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 		$itemPackage = $iaItem->getPackageByItem($name);
 		$itemClass = (iaCore::CORE == $itemPackage)
 			? $iaCore->factory((iaUsers::getItemName() == $name) ? 'users' : $name)
-			: $iaCore->factoryPackage('item', $itemPackage, iaCore::FRONT, $name);
+			: $iaCore->factoryModule('item', $itemPackage, iaCore::FRONT, $name);
 
 		$dbTable = call_user_func(array($itemClass, 'getTable'));
 		$iaCore->iaDb->update(array('id' => $id, 'longitude' => $_POST['longitude'], 'latitude' => $_POST['latitude']), null, null, $dbTable);

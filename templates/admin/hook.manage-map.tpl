@@ -11,6 +11,6 @@
 		<div id="js-gmap-renderer" class="gmap-renderer col col-lg-8"></div>
 	</div>
 
-	{ia_print_css files='_IA_URL_plugins/gmap/templates/front/css/style'}
-	{ia_print_js files='_IA_URL_plugins/gmap/js/admin/manage-google-map' order=3}
+	{ia_print_css files='_IA_URL_modules/gmap/templates/front/css/style'}
+	{ia_print_js files='_IA_URL_modules/gmap/js/admin/manage-google-map' order=3}
 {/if}

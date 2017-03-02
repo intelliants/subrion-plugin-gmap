@@ -58,13 +58,13 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 			}
 		}
 
-		$params['items'] = iaUtil::jsonEncode($params['items']);
+		$params['items'] = json_encode($params['items']);
 
 		$iaView->assign('gmap', $params);
 
 		if ('default' != $params['style'])
 		{
-			$iaView->add_js('_IA_URL_plugins/gmap/js/frontend/styles');
+			$iaView->add_js('_IA_URL_modules/gmap/js/frontend/styles');
 		}
 	}
 }

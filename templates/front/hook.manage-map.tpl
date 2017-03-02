@@ -8,6 +8,6 @@
 	<label id="js-gmap-annotation" class="hidden">{lang key='drag_and_drop_marker'}</label>
 	<div id="js-gmap-renderer" class="m-b hidden" style="height: 250px;"></div>
 
-	{ia_print_css files='_IA_URL_plugins/gmap/templates/front/css/style'}
-	{ia_print_js files='_IA_URL_plugins/gmap/js/frontend/manage-google-map' order=3}
+	{ia_print_css files='_IA_URL_modules/gmap/templates/front/css/style'}
+	{ia_print_js files='_IA_URL_modules/gmap/js/frontend/manage-google-map' order=3}
 {/if}

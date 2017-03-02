@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<plugin name="gmap">
+<module type="plugin" name="gmap">
 	<title>Google Map</title>
 	<summary>Makes possible to display the Google Map for listings</summary>
 	<author>Intelliants LLC</author>
 	<contributor>Intelliants LLC</contributor>
-	<version>4.0.3</version>
-	<date>2016-03-25</date>
-	<compatibility>4.0.5</compatibility>
+	<version>4.1.0</version>
+	<date>2016-03-02</date>
+	<compatibility>4.1</compatibility>
 
 	<blocks>
 		<block type="smarty" name="listings_on_map" title="Listings on Map"
@@ -39,14 +39,6 @@
 	</hooks>
 
 	<phrases>
-		<phrase category="common" key="fieldgroup_location">Location</phrase>
-		<phrase category="common" key="field_zipcode">ZIP Code</phrase>
-		<phrase category="common" key="field_country">Country</phrase>
-		<phrase category="common" key="field_state">State</phrase>
-		<phrase category="common" key="field_city">City</phrase>
-		<phrase category="common" key="field_address">Address</phrase>
-		<phrase category="common" key="field_latitude">Latitude</phrase>
-		<phrase category="common" key="field_longitude">Longitude</phrase>
 		<phrase category="common" key="drag_and_drop_marker">Drag and drop the marker to adjust location:</phrase>
 	</phrases>
-</plugin>
+</module>

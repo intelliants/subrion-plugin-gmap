@@ -29,7 +29,7 @@ $fields = array('zip', 'country', 'state', 'city', 'address', 'latitude', 'longi
 $items = array('accounts');
 $relation = array('accounts' => ''); // item/package relations
 $gmap_enabled = explode(',', $iaCore->get('gmap_enable_for'));
-$tmp = $iaDb->onefield('items', "`items` != ''", 0, 0, 'extras');
+$tmp = $iaDb->onefield('items', "`items` != ''", 0, 0, 'module');
 
 foreach ($tmp as $i)
 {
@@ -82,7 +82,7 @@ if (isset($_POST['save']))
 					'type' => 'text',
 					'length' => 50,
 					'status' => 'active',
-					'extras' => $relation[$gitem]
+					'module' => $relation[$gitem]
 				);
 				$iaDb->insert($data, false, 'fields');
 			}
