@@ -12,5 +12,5 @@
 	</div>
 
 	{ia_print_css files='_IA_URL_modules/gmap/templates/front/css/style'}
-	{ia_print_js files='_IA_URL_modules/gmap/js/admin/manage-google-map' order=3}
+	{ia_print_js files='_IA_URL_modules/gmap/js/admin/google-map' order=3}
 {/if}

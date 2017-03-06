@@ -1,4 +1,4 @@
-{if isset($gmap_data.listing) && $gmap_data.listing && ($gmap_data.listing.city || $gmap_data.listing.address)}
+{if !empty($gmap_data.listing) && ($gmap_data.listing.city || $gmap_data.listing.address)}
 	<div class="gmap-renderer js-gmap hidden"
 		 data-map-for="item"
 		 data-item-id="{$gmap_data.id}"
@@ -18,5 +18,5 @@
 	</div>
 
 	{ia_print_css files='_IA_URL_modules/gmap/templates/front/css/style'}
-	{ia_print_js files='_IA_URL_modules/gmap/js/frontend/google-map' order=3}
+	{ia_print_js files='_IA_URL_modules/gmap/js/front/google-map' order=3}
 {/if}
