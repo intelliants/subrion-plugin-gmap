@@ -11,7 +11,7 @@
 	<blocks>
 		<block type="smarty" name="listings_on_map" title="Listings on Map"
 			header="0" position="verytop" sticky="0" filename="block.map"
-			pages="index,realestate_index,realestate_search,realestate_index_my,yellowpages_index,ylocs_search,ylocs_change,top_venues,new_venues,random_venues,my_venues,ycategs_browse"><![CDATA[]]></block>
+			pages="realestate_index,realestate_search,realestate_index_my,yellowpages_index,ylocs_search,ylocs_change,top_venues,new_venues,random_venues,my_venues,ycategs_browse"><![CDATA[]]></block>
 	</blocks>
 
 	<configgroup name="gmap">Google Map</configgroup>
