@@ -46,7 +46,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 	foreach ($data as $entry)
 	{
 		$itemName = $entry['item'];
-		$package = $iaItem->getPackageByItem($itemName);
+		$package = $iaItem->getModuleByItem($itemName);
 
 		iaLanguage::addPhrase(sprintf('fieldgroup_%s_location', $entry['item']), 'Location');
 
