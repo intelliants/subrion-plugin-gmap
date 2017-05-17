@@ -42,7 +42,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 	}
 	else
 	{
-		$itemPackage = $iaItem->getPackageByItem($item);
+		$itemPackage = $iaItem->getModuleByItem($item);
 		$itemClass = $iaCore->factoryModule('item', $itemPackage, iaCore::FRONT, $item);
 		$itemData = $itemClass->getById($listing);
 	}
