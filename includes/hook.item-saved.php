@@ -34,7 +34,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType())
 
 	if (in_array($name, $enabledItems) && isset($_POST['longitude']) && isset($_POST['latitude']))
 	{
-		$itemPackage = $iaItem->getPackageByItem($name);
+		$itemPackage = $iaItem->getModuleByItem($name);
 		$itemClass = (iaCore::CORE == $itemPackage)
 			? $iaCore->factory((iaUsers::getItemName() == $name) ? 'users' : $name)
 			: $iaCore->factoryModule('item', $itemPackage, iaCore::FRONT, $name);
