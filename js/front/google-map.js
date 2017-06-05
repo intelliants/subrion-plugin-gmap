@@ -84,8 +84,8 @@ $(function() {
 	if (typeof google === 'object' && typeof google.maps === 'object') {
 		mapInit();
 	} else {
-		if (intelli.config.gmap_api_key) {
-			loadScript('//maps.googleapis.com/maps/api/js?key=' + intelli.config.gmap_api_key + '&callback=mapInit');
+		if (intelli.config.maps_api_key) {
+			loadScript('//maps.googleapis.com/maps/api/js?key=' + intelli.config.maps_api_key + '&callback=mapInit');
 		} else {
 			loadScript('//maps.googleapis.com/maps/api/js?callback=mapInit');
 		}
