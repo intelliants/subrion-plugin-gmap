@@ -24,47 +24,40 @@
  *
  ******************************************************************************/
 
-if (iaView::REQUEST_HTML == $iaView->getRequestType())
-{
-	if ($iaView->blockExists('listings_on_map'))
-	{
-		$params = array(
-			'items' => array(),
-			'language' => $iaView->language,
-			'location' => is_string($iaView->get('location')) ? $iaView->get('location') : null,
-			'style' => $iaCore->get('gmap_style')
-		);
+if (iaView::REQUEST_HTML == $iaView->getRequestType()) {
+    if ($iaView->blockExists('listings_on_map')) {
+        $params = [
+            'items' => [],
+            'language' => $iaView->language,
+            'location' => is_string($iaView->get('location')) ? $iaView->get('location') : null,
+            'style' => $iaCore->get('gmap_style')
+        ];
 
-		if ($listings = $iaView->getValues('listings'))
-		{
-			foreach ($listings as $listing)
-			{
-				if (!empty($listing['latitude']) && !empty($listing['longitude']))
-				{
-					$entry = array(
-						'lat' => $listing['latitude'],
-						'lng' => $listing['longitude'],
+        if ($listings = $iaView->getValues('listings')) {
+            foreach ($listings as $listing) {
+                if (!empty($listing['latitude']) && !empty($listing['longitude'])) {
+                    $entry = [
+                        'lat' => $listing['latitude'],
+                        'lng' => $listing['longitude'],
 
-						'title' => isset($listing['title']) ? $listing['title'] : null
-					);
+                        'title' => isset($listing['title']) ? $listing['title'] : null
+                    ];
 
-					if (is_null($entry['title']))
-					{
-						empty($listing['venue_title']) || $entry['title'] = $listing['venue_title'];
-					}
+                    if (is_null($entry['title'])) {
+                        empty($listing['venue_title']) || $entry['title'] = $listing['venue_title'];
+                    }
 
-					$params['items'][] = $entry;
-				}
-			}
-		}
+                    $params['items'][] = $entry;
+                }
+            }
+        }
 
-		$params['items'] = json_encode($params['items']);
+        $params['items'] = json_encode($params['items']);
 
-		$iaView->assign('gmap', $params);
+        $iaView->assign('gmap', $params);
 
-		if ('default' != $params['style'])
-		{
-			$iaView->add_js('_IA_URL_modules/gmap/js/front/styles');
-		}
-	}
+        if ('default' != $params['style']) {
+            $iaView->add_js('_IA_URL_modules/gmap/js/front/styles');
+        }
+    }
 }

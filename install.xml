@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module type="plugin" name="gmap">
-	<title>Google Map</title>
-	<summary>Makes possible to display the Google Map for listings</summary>
-	<author>Intelliants LLC</author>
-	<contributor>Intelliants LLC</contributor>
-	<version>4.1.0</version>
-	<date>2016-03-06</date>
-	<compatibility>4.1</compatibility>
+    <title>Google Map</title>
+    <summary>Makes possible to display the Google Map for listings</summary>
+    <author>Intelliants LLC</author>
+    <contributor>Intelliants LLC</contributor>
+    <version>4.1.0</version>
+    <date>2017-06-21</date>
+    <compatibility>4.1</compatibility>
 
-	<blocks>
-		<block type="smarty" name="listings_on_map" title="Listings on Map"
-			header="0" position="verytop" sticky="0" filename="block.map"
-			pages="realestate_index,realestate_search,realestate_index_my,yellowpages_index,ylocs_search,ylocs_change,top_venues,new_venues,random_venues,my_venues,ycategs_browse"><![CDATA[]]></block>
-	</blocks>
+    <blocks>
+        <block type="smarty" name="listings_on_map" title="Listings on Map"
+            header="0" position="verytop" sticky="0" filename="block.map"
+            pages="realestate_index,realestate_search,realestate_index_my,yellowpages_index,ylocs_search,ylocs_change,top_venues,new_venues,random_venues,my_venues,ycategs_browse"><![CDATA[]]></block>
+    </blocks>
 
-	<configgroup name="gmap">Google Map</configgroup>
-	<config group="gmap" type="divider">General</config>
-	<config group="gmap" name="gmap_items_enabled" type="itemscheckbox" description="List of items Google Map is enabled for"><![CDATA[]]></config>
-	<config group="gmap" name="gmap_items_implemented" type="hidden">members,autos,articles,listings,venues,shops</config>
-	<config group="gmap" type="divider">Google Map</config>
-	<config group="gmap" name="gmap_draggable" type="radio" values="1,0" description="Draggable" private="0">1</config>
-	<config group="gmap" name="gmap_scrollable" type="radio" values="1,0" description="Scrollable" private="0">0</config>
-	<config group="gmap" name="gmap_ui" type="radio" values="1,0" description="Show map controls" private="0">0</config>
-	<config group="gmap" name="gmap_type" type="select" values="roadmap,satellite,hybrid,terrain" description="Map type" private="0">roadmap</config>
-	<config group="gmap" name="gmap_style" type="select" values="default,blue-water,midnight-commander,pale-down,retro,subtle-grayscale" description="Style">blue-water</config>
+    <configgroup name="gmap">Google Map</configgroup>
+    <config group="gmap" type="divider">General</config>
+    <config group="gmap" name="gmap_items_enabled" type="itemscheckbox" description="List of items Google Map is enabled for"><![CDATA[]]></config>
+    <config group="gmap" name="gmap_items_implemented" type="hidden">members,autos,articles,listings,venues,shops</config>
+    <config group="gmap" type="divider">Google Map</config>
+    <config group="gmap" name="gmap_draggable" type="radio" values="1,0" description="Draggable" private="0">1</config>
+    <config group="gmap" name="gmap_scrollable" type="radio" values="1,0" description="Scrollable" private="0">0</config>
+    <config group="gmap" name="gmap_ui" type="radio" values="1,0" description="Show map controls" private="0">0</config>
+    <config group="gmap" name="gmap_type" type="select" values="roadmap,satellite,hybrid,terrain" description="Map type" private="0">roadmap</config>
+    <config group="gmap" name="gmap_style" type="select" values="default,blue-water,midnight-commander,pale-down,retro,subtle-grayscale" description="Style">blue-water</config>
 
-	<hooks>
-		<hook name="phpCoreBeforePageDisplay" page_type="both" filename="hook.load-data"><![CDATA[]]></hook>
-		<hook name="smartyListingSubmitBeforeFooter" type="smarty" filename="hook.manage-map"><![CDATA[]]></hook>
-		<hook name="smartyAdminSubmitItemBeforeFooter" type="smarty" filename="hook.manage-map"><![CDATA[]]></hook>
-		<hook name="smartyViewListingAuthorBlock" type="smarty" filename="hook.author-block"><![CDATA[]]></hook>
-		<hook name="smartyViewListingBeforeFooter" type="smarty" filename="hook.map"><![CDATA[]]></hook>
-		<hook name="phpViewListingBeforeStart" type="php" page_type="front" filename="hook.view-listing"><![CDATA[]]></hook>
-		<hook name="phpItemSaved" type="php" filename="hook.item-saved"><![CDATA[]]></hook>
-		<hook name="phpAddItemAfterAll" type="php" filename="hook.item-saved"><![CDATA[]]></hook>
-		<hook name="phpPackageItemChangedForPlugin" type="php" page_type="admin" filename="hook.item-configuration"><![CDATA[]]></hook>
-	</hooks>
+    <hooks>
+        <hook name="phpCoreBeforePageDisplay" page_type="both" filename="hook.load-data"><![CDATA[]]></hook>
+        <hook name="smartyListingSubmitBeforeFooter" type="smarty" filename="hook.manage-map"><![CDATA[]]></hook>
+        <hook name="smartyAdminSubmitItemBeforeFooter" type="smarty" filename="hook.manage-map"><![CDATA[]]></hook>
+        <hook name="smartyViewListingAuthorBlock" type="smarty" filename="hook.author-block"><![CDATA[]]></hook>
+        <hook name="smartyViewListingBeforeFooter" type="smarty" filename="hook.map"><![CDATA[]]></hook>
+        <hook name="phpViewListingBeforeStart" type="php" page_type="front" filename="hook.view-listing"><![CDATA[]]></hook>
+        <hook name="phpItemSaved" type="php" filename="hook.item-saved"><![CDATA[]]></hook>
+        <hook name="phpAddItemAfterAll" type="php" filename="hook.item-saved"><![CDATA[]]></hook>
+        <hook name="phpPackageItemChangedForPlugin" type="php" page_type="admin" filename="hook.item-configuration"><![CDATA[]]></hook>
+    </hooks>
 
-	<phrases>
-		<phrase category="common" key="drag_and_drop_marker">Drag and drop the marker to adjust location:</phrase>
-	</phrases>
+    <phrases>
+        <phrase category="common" key="drag_and_drop_marker">Drag and drop the marker to adjust location:</phrase>
+    </phrases>
 </module>

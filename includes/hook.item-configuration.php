@@ -24,119 +24,109 @@
  *
  ******************************************************************************/
 
-if (iaView::REQUEST_HTML == $iaView->getRequestType())
-{
-	$plugin = 'gmap';
-	$fields = array('zipcode', 'country', 'state', 'city', 'address', 'latitude', 'longitude');
-	$length = 64;
-	$pages = array(
-		'members' => array('profile', 'view_member'),
-		'autos' => array('autos_add', 'autos_edit', 'autos_view'),
-		'articles' => array('submit_article', 'edit_article', 'view_article'),
-		//'estates' => array('estate_submit', 'estate_edit'),
-		'listings' => array('add_listing', 'edit_listing', 'view_listing'),
-		'venues' => array('venue_add', 'venue_edit', 'venue_view'),
-		'coupons' => array('coupon_add', 'coupon_edit', 'coupon_view'),
-		'shops' => array('shop_view'),
-	);
+if (iaView::REQUEST_HTML == $iaView->getRequestType()) {
+    if (empty($data)) {
+        return;
+    }
 
-	$iaItem = $iaCore->factory('item');
-	$iaField = $iaCore->factory('field');
+    $plugin = 'gmap';
+    $fields = ['zipcode', 'country', 'state', 'city', 'address', 'latitude', 'longitude'];
+    $length = 64;
+    $pages = [
+        'members' => ['profile', 'view_member'],
+        'autos' => ['autos_add', 'autos_edit', 'autos_view'],
+        'articles' => ['submit_article', 'edit_article', 'view_article'],
+        //'estates' => array('estate_submit', 'estate_edit'),
+        'listings' => ['add_listing', 'edit_listing', 'view_listing'],
+        'venues' => ['venue_add', 'venue_edit', 'venue_view'],
+        'coupons' => ['coupon_add', 'coupon_edit', 'coupon_view'],
+        'shops' => ['shop_view'],
+    ];
 
-	foreach ($data as $entry)
-	{
-		$itemName = $entry['item'];
-		$package = $iaItem->getModuleByItem($itemName);
+    $iaItem = $iaCore->factory('item');
+    $iaField = $iaCore->factory('field');
 
-		iaLanguage::addPhrase(sprintf('fieldgroup_%s_location', $entry['item']), 'Location');
+    foreach ($data as $entry) {
+        $itemName = $entry['item'];
+        $package = $iaItem->getModuleByItem($itemName);
 
-		iaLanguage::addPhrase(sprintf('field_%s_zipcode', $entry['item']), 'ZIP Code');
-		iaLanguage::addPhrase(sprintf('field_%s_country', $entry['item']), 'Country');
-		iaLanguage::addPhrase(sprintf('field_%s_state', $entry['item']), 'State');
-		iaLanguage::addPhrase(sprintf('field_%s_city', $entry['item']), 'City');
-		iaLanguage::addPhrase(sprintf('field_%s_address', $entry['item']), 'Address');
-		iaLanguage::addPhrase(sprintf('field_%s_latitude', $entry['item']), 'Latitude');
-		iaLanguage::addPhrase(sprintf('field_%s_longitude', $entry['item']), 'Longitude');
+        iaLanguage::addPhrase(sprintf('fieldgroup_%s_location', $entry['item']), 'Location');
 
-		switch ($entry['action'])
-		{
-			case '+':
-				$group = 0;
-				if ($id = $iaDb->one(iaDb::ID_COLUMN_SELECTION, "`item` = '{$itemName}' AND `name` LIKE '%location%'", iaField::getTableGroups()))
-				{
-					$group = $id;
-				}
-				else
-				{
-					$order = $iaDb->one('MAX(`order`) + 1', null, iaField::getTableGroups());
-					$group = $iaDb->insert(array(
-						'name' => 'location',
-						'item' => $itemName,
-						'order' => $order,
-						'module' => $package,
-						'collapsed' => false,
-						'tabview' => true
-					), null, iaField::getTableGroups());
-				}
+        iaLanguage::addPhrase(sprintf('field_%s_zipcode', $entry['item']), 'ZIP Code');
+        iaLanguage::addPhrase(sprintf('field_%s_country', $entry['item']), 'Country');
+        iaLanguage::addPhrase(sprintf('field_%s_state', $entry['item']), 'State');
+        iaLanguage::addPhrase(sprintf('field_%s_city', $entry['item']), 'City');
+        iaLanguage::addPhrase(sprintf('field_%s_address', $entry['item']), 'Address');
+        iaLanguage::addPhrase(sprintf('field_%s_latitude', $entry['item']), 'Latitude');
+        iaLanguage::addPhrase(sprintf('field_%s_longitude', $entry['item']), 'Longitude');
 
-				$sql = sprintf('SHOW COLUMNS FROM `%s%s`', $iaDb->prefix, $iaItem->getItemTable($itemName));
+        switch ($entry['action']) {
+            case '+':
+                $group = 0;
+                if ($id = $iaDb->one(iaDb::ID_COLUMN_SELECTION, "`item` = '{$itemName}' AND `name` LIKE '%location%'", iaField::getTableGroups())) {
+                    $group = $id;
+                } else {
+                    $order = $iaDb->one('MAX(`order`) + 1', null, iaField::getTableGroups());
+                    $group = $iaDb->insert([
+                        'name' => 'location',
+                        'item' => $itemName,
+                        'order' => $order,
+                        'module' => $package,
+                        'collapsed' => false,
+                        'tabview' => true
+                    ], null, iaField::getTableGroups());
+                }
 
-				$existColumns = array_keys($iaDb->getKeyValue($sql));
-				$existFields = $iaDb->onefield('name', "`item` = '$itemName'", null, null, iaField::getTable());
+                $sql = sprintf('SHOW COLUMNS FROM `%s%s`', $iaDb->prefix, $iaItem->getItemTable($itemName));
 
-				$order = (int)$iaDb->one('MAX(`order`)', null, iaField::getTable());
+                $existColumns = array_keys($iaDb->getKeyValue($sql));
+                $existFields = $iaDb->onefield('name', "`item` = '$itemName'", null, null, iaField::getTable());
 
-				foreach ($fields as $field)
-				{
-					if (!in_array($field, $existColumns))
-					{
-						$sql = sprintf('ALTER TABLE `%s%s` ADD `%s` VARCHAR(%d) NOT NULL', $iaDb->prefix, $iaItem->getItemTable($itemName), $field, $length);
-						$iaDb->query($sql);
-					}
+                $order = (int)$iaDb->one('MAX(`order`)', null, iaField::getTable());
 
-					if (!in_array($field, $existFields))
-					{
-						if ('latitude' != $field && 'longitude' != $field)
-						{
-							$row = array(
-								'fieldgroup_id' => $group,
-								'name' => $field,
-								'item' => $itemName,
-								'type' => iaField::TEXT,
-								'length' => $length,
-								'status' => iaCore::STATUS_ACTIVE,
-								'editable' => false,
-								'order' => $order++,
-								'module' => $plugin
-							);
+                foreach ($fields as $field) {
+                    if (!in_array($field, $existColumns)) {
+                        $sql = sprintf('ALTER TABLE `%s%s` ADD `%s` VARCHAR(%d) NOT NULL', $iaDb->prefix, $iaItem->getItemTable($itemName), $field, $length);
+                        $iaDb->query($sql);
+                    }
 
-							$fieldId = $iaDb->insert($row, null, iaField::getTable());
+                    if (!in_array($field, $existFields)) {
+                        if ('latitude' != $field && 'longitude' != $field) {
+                            $row = [
+                                'fieldgroup_id' => $group,
+                                'name' => $field,
+                                'item' => $itemName,
+                                'type' => iaField::TEXT,
+                                'length' => $length,
+                                'status' => iaCore::STATUS_ACTIVE,
+                                'editable' => false,
+                                'order' => $order++,
+                                'module' => $plugin
+                            ];
 
-							if (isset($pages[$itemName]))
-							{
-								foreach ($pages[$itemName] as $page)
-								{
-									$row = array(
-										'page_name' => $page,
-										'field_id' => $fieldId
-									);
+                            $fieldId = $iaDb->insert($row, null, iaField::getTable());
 
-									$iaDb->insert($row, null, iaField::getTablePages());
-								}
-							}
-						}
-					}
-					else
-					{
-						$iaDb->update(array('status' => iaCore::STATUS_ACTIVE), "`name` = '$field' AND `item` = '$itemName'", null, iaField::getTable());
-					}
-				}
+                            if (isset($pages[$itemName])) {
+                                foreach ($pages[$itemName] as $page) {
+                                    $row = [
+                                        'page_name' => $page,
+                                        'field_id' => $fieldId
+                                    ];
 
-				break;
+                                    $iaDb->insert($row, null, iaField::getTablePages());
+                                }
+                            }
+                        }
+                    } else {
+                        $iaDb->update(['status' => iaCore::STATUS_ACTIVE], "`name` = '$field' AND `item` = '$itemName'", null, iaField::getTable());
+                    }
+                }
 
-			case '-':
-				$stmt = sprintf("`item` = '%s' AND `required` = 0 AND `module` = '%s' AND `name` IN ('%s')", $itemName, $plugin, implode("', '", $fields));
-				$iaDb->update(array('status' => iaCore::STATUS_APPROVAL), $stmt, null, iaField::getTable());
-		}
-	}
+                break;
+
+            case '-':
+                $stmt = sprintf("`item` = '%s' AND `required` = 0 AND `module` = '%s' AND `name` IN ('%s')", $itemName, $plugin, implode("', '", $fields));
+                $iaDb->update(['status' => iaCore::STATUS_APPROVAL], $stmt, null, iaField::getTable());
+        }
+    }
 }
