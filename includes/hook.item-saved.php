@@ -25,19 +25,18 @@
  ******************************************************************************/
 
 if (iaView::REQUEST_HTML == $iaView->getRequestType()) {
-    $name = isset($itemName) && !empty($itemName) ? $itemName : $item;
-    $id = isset($itemId) && !empty($itemId) ? $itemId : $listing;
+    $name = empty($itemName) ? $item : $itemName;
+    $id = empty($itemId) ? $listing : $itemId;
 
-    $iaItem = $iaCore->factory('item');
-    $enabledItems = $iaItem->getEnabledItemsForPlugin('gmap');
+    $enabledItems = $iaCore->factory('item')->getEnabledItemsForPlugin('gmap');
 
     if (in_array($name, $enabledItems) && isset($_POST['longitude']) && isset($_POST['latitude'])) {
-        $itemPackage = $iaItem->getModuleByItem($name);
-        $itemClass = (iaCore::CORE == $itemPackage)
-            ? $iaCore->factory((iaUsers::getItemName() == $name) ? 'users' : $name)
-            : $iaCore->factoryModule('item', $itemPackage, iaCore::FRONT, $name);
+        $itemInstance = iaUsers::getItemName() == $name
+            ? $iaCore->factory('users')
+            : $iaCore->factoryItem($name);
 
-        $dbTable = call_user_func([$itemClass, 'getTable']);
+        $dbTable = call_user_func([$itemInstance, 'getTable']);
+
         $iaCore->iaDb->update(['id' => $id, 'longitude' => $_POST['longitude'], 'latitude' => $_POST['latitude']], null, null, $dbTable);
     }
 }

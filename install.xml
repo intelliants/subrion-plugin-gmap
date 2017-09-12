@@ -11,13 +11,13 @@
     <blocks>
         <block type="smarty" name="listings_on_map" title="Listings on Map"
             header="0" position="verytop" sticky="0" filename="block.map"
-            pages="realestate_index,realestate_search,realestate_index_my,yellowpages_index,ylocs_search,ylocs_change,top_venues,new_venues,random_venues,my_venues,ycategs_browse"><![CDATA[]]></block>
+            pages="realestate_index,realestate_search,realestate_index_my,yellowpages_index,ylocs_search,ylocs_change,top_venues,new_venues,random_venues,my_venues,ycategs_browse,members,view_member"><![CDATA[]]></block>
     </blocks>
 
     <configgroup name="gmap">Google Map</configgroup>
     <config group="gmap" type="divider">General</config>
     <config group="gmap" name="gmap_items_enabled" type="itemscheckbox" description="List of items Google Map is enabled for"><![CDATA[]]></config>
-    <config group="gmap" name="gmap_items_implemented" type="hidden">members,autos,articles,listings,venues,shops</config>
+    <config group="gmap" name="gmap_items_implemented" type="hidden">member,auto,article,listing,venue,shop</config>
     <config group="gmap" type="divider">Google Map</config>
     <config group="gmap" name="gmap_draggable" type="radio" values="1,0" description="Draggable" private="0">1</config>
     <config group="gmap" name="gmap_scrollable" type="radio" values="1,0" description="Scrollable" private="0">0</config>

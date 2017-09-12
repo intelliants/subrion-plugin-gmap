@@ -33,22 +33,31 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType()) {
             'style' => $iaCore->get('gmap_style')
         ];
 
-        if ($listings = $iaView->getValues('listings')) {
-            foreach ($listings as $listing) {
-                if (!empty($listing['latitude']) && !empty($listing['longitude'])) {
-                    $entry = [
-                        'lat' => $listing['latitude'],
-                        'lng' => $listing['longitude'],
+        function keyLookup(array $data, array $keys)
+        {
+            foreach ($keys as $key)
+                if (isset($data[$key])) return $data[$key];
 
-                        'title' => isset($listing['title']) ? $listing['title'] : null
-                    ];
+            return null;
+        }
 
-                    if (is_null($entry['title'])) {
-                        empty($listing['venue_title']) || $entry['title'] = $listing['venue_title'];
+        foreach (['listings', 'members', 'item'] as $varName) {
+            if ($listings = $iaView->getValues($varName)) {
+                'item' == $varName && $listings = [$listings];
+                foreach ($listings as $listing) {
+                    if (!empty($listing['latitude']) && !empty($listing['longitude'])) {
+                        $entry = [
+                            'lat' => $listing['latitude'],
+                            'lng' => $listing['longitude'],
+
+                            'title' => keyLookup($listing, ['title', 'venue_title', 'fullname'])
+                        ];
+
+                        $params['items'][] = $entry;
                     }
-
-                    $params['items'][] = $entry;
                 }
+
+                break;
             }
         }
 

@@ -33,14 +33,14 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType()) {
     $fields = ['zipcode', 'country', 'state', 'city', 'address', 'latitude', 'longitude'];
     $length = 64;
     $pages = [
-        'members' => ['profile', 'view_member'],
-        'autos' => ['autos_add', 'autos_edit', 'autos_view'],
-        'articles' => ['submit_article', 'edit_article', 'view_article'],
+        'member' => ['profile', 'view_member'],
+        'auto' => ['autos_add', 'autos_edit', 'autos_view'],
+        'article' => ['submit_article', 'edit_article', 'view_article'],
         //'estates' => array('estate_submit', 'estate_edit'),
-        'listings' => ['add_listing', 'edit_listing', 'view_listing'],
-        'venues' => ['venue_add', 'venue_edit', 'venue_view'],
-        'coupons' => ['coupon_add', 'coupon_edit', 'coupon_view'],
-        'shops' => ['shop_view'],
+        'listing' => ['add_listing', 'edit_listing', 'view_listing'],
+        'venue' => ['venue_add', 'venue_edit', 'venue_view'],
+        'coupon' => ['coupon_add', 'coupon_edit', 'coupon_view'],
+        'shop' => ['shop_view'],
     ];
 
     $iaItem = $iaCore->factory('item');
@@ -126,7 +126,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType()) {
 
             case '-':
                 $stmt = sprintf("`item` = '%s' AND `required` = 0 AND `module` = '%s' AND `name` IN ('%s')", $itemName, $plugin, implode("', '", $fields));
-                $iaDb->update(['status' => iaCore::STATUS_APPROVAL], $stmt, null, iaField::getTable());
+                $iaDb->update(['status' => iaCore::STATUS_INACTIVE], $stmt, null, iaField::getTable());
         }
     }
 }

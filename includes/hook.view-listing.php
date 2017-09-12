@@ -34,13 +34,9 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType()) {
     $iaItem = $iaCore->factory('item');
     $iaUsers = $iaCore->factory('users');
 
-    if ($item == iaUsers::getItemName()) {
-        $itemData = $iaUsers->getInfo($listing);
-    } else {
-        $itemPackage = $iaItem->getModuleByItem($item);
-        $itemClass = $iaCore->factoryModule('item', $itemPackage, iaCore::FRONT, $item);
-        $itemData = $itemClass->getById($listing);
-    }
+    $itemData = $item == iaUsers::getItemName()
+        ? $iaUsers->getInfo($listing)
+        : $iaCore->factoryItem($item)->getById($listing);
 
     $enabledItems = $iaItem->getEnabledItemsForPlugin('gmap');
 
