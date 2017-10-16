@@ -27,13 +27,20 @@
 
     <hooks>
         <hook name="phpCoreBeforePageDisplay" page_type="both" filename="hook.load-data"><![CDATA[]]></hook>
-        <hook name="smartyListingSubmitBeforeFooter" type="smarty" filename="hook.manage-map"><![CDATA[]]></hook>
-        <hook name="smartyAdminSubmitItemBeforeFooter" type="smarty" filename="hook.manage-map"><![CDATA[]]></hook>
+
+        <hook name="smartyListingSubmitBeforeFooter" type="smarty" filename="hook.manage-map" page_type="front"><![CDATA[]]></hook>
+        <hook name="frontEditProfile" type="smarty" filename="hook.manage-map" page_type="front"><![CDATA[]]></hook>
+        <hook name="smartyAdminSubmitItemBeforeFooter" type="smarty" filename="hook.manage-map" page_type="admin"><![CDATA[]]></hook>
+
         <hook name="smartyViewListingAuthorBlock" type="smarty" filename="hook.author-block"><![CDATA[]]></hook>
         <hook name="smartyViewListingBeforeFooter" type="smarty" filename="hook.map"><![CDATA[]]></hook>
+
         <hook name="phpViewListingBeforeStart" type="php" page_type="front" filename="hook.view-listing"><![CDATA[]]></hook>
-        <hook name="phpItemSaved" type="php" filename="hook.item-saved"><![CDATA[]]></hook>
+
+        <hook name="phpUserProfileUpdate" type="php" filename="hook.item-saved"><![CDATA[]]></hook>
         <hook name="phpAddItemAfterAll" type="php" filename="hook.item-saved"><![CDATA[]]></hook>
+        <hook name="phpItemSaved" type="php" filename="hook.item-saved"><![CDATA[]]></hook>
+
         <hook name="phpPackageItemChangedForPlugin" type="php" page_type="admin" filename="hook.item-configuration"><![CDATA[]]></hook>
     </hooks>
 

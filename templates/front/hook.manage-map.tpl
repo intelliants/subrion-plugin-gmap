@@ -9,5 +9,5 @@
     <div id="js-gmap-renderer" class="m-b hidden" style="height: 250px;"></div>
 
     {ia_print_css files='_IA_URL_modules/gmap/templates/front/css/style'}
-    {ia_print_js files='_IA_URL_modules/gmap/js/front/google-map' order=3}
+    {ia_print_js files='_IA_URL_modules/gmap/js/manage-google-map' order=3}
 {/if}

@@ -25,18 +25,28 @@
  ******************************************************************************/
 
 if (iaView::REQUEST_HTML == $iaView->getRequestType()) {
-    $name = empty($itemName) ? $item : $itemName;
-    $id = empty($itemId) ? $listing : $itemId;
+    switch (true) {
+        case isset($userInfo): // 'phpUserProfileUpdate' hook - front
+            $itemName = iaUsers::getItemName();
+            $itemId = $userInfo['id'];
+            break;
+        case isset($item) && isset($listing): // 'phpAddItemAfterAll' hook - front
+            $itemName = $item;
+            $itemId = $listing;
+            break;
+        default: // 'phpItemSaved' hook - backend
+            //$itemName
+            //$itemId
+    }
 
     $enabledItems = $iaCore->factory('item')->getEnabledItemsForPlugin('gmap');
 
-    if (in_array($name, $enabledItems) && isset($_POST['longitude']) && isset($_POST['latitude'])) {
-        $itemInstance = iaUsers::getItemName() == $name
+    if (in_array($itemName, $enabledItems) && isset($_POST['longitude']) && isset($_POST['latitude'])) {
+        $itemInstance = iaUsers::getItemName() == $itemName
             ? $iaCore->factory('users')
-            : $iaCore->factoryItem($name);
+            : $iaCore->factoryItem($itemName);
 
-        $dbTable = call_user_func([$itemInstance, 'getTable']);
-
-        $iaCore->iaDb->update(['id' => $id, 'longitude' => $_POST['longitude'], 'latitude' => $_POST['latitude']], null, null, $dbTable);
+        $iaDb->update(['longitude' => $_POST['longitude'], 'latitude' => $_POST['latitude']],
+            iaDb::convertIds($itemId), null, $itemInstance::getTable());
     }
 }

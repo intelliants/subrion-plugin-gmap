@@ -10,7 +10,8 @@ intelli.gm = function () {
         draggable: intelli.config.gmap_draggable,
         scrollwheel: intelli.config.gmap_scrollable
     };
-    if ('default' != paramsEl.getAttribute('data-skin')) {
+
+    if ('default' !== paramsEl.getAttribute('data-skin')) {
         options.styles = gmStyles[paramsEl.getAttribute('data-skin')];
     }
 
@@ -21,7 +22,7 @@ intelli.gm = function () {
 
     var self = this;
 
-    if (0 == this.data.length) {
+    if (!this.data.length) {
         if (this.region) {
             geocoder.geocode({address: this.region}, function (results, status) {
                 if (google.maps.GeocoderStatus.OK == status) {
@@ -72,7 +73,7 @@ intelli.gm = function () {
         bounds.extend(coords);
 
         if (entryIdx == (self.data.length - 1)) {
-            (1 == self.data.length)
+            (1 === self.data.length)
                 ? _mapCenterAndZoom(coords)
                 : self.map.fitBounds(bounds);
         }

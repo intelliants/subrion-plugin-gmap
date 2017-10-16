@@ -9,9 +9,9 @@ function mapInit() {
 
 function showMap(elem) {
     var $this = elem,
-        mapFor = ('author' == $this.data('map-for')) ? 'author' : 'item';
+        mapFor = ('author' === $this.data('map-for')) ? 'author' : 'item';
 
-    if ('author' != mapFor) {
+    if ('author' !== mapFor) {
         if ($('#fieldgroup_ypage_location').length > 0) {
             $this.appendTo('#fieldgroup_ypage_location');
         } else {
@@ -72,15 +72,15 @@ function loadScript(url, handler) {
 
     tag.type = 'text/javascript';
     tag.src = url;
-    tag.onreadystatechange = function () {
-        if (this.readyState == 'complete' || this.readyState == 'loaded') this.onload({target: this});
+    tag.onreadystatechange = function() {
+        if (this.readyState === 'complete' || this.readyState === 'loaded') this.onload({target: this});
     };
     tag.onload = handler;
 
     document.getElementsByTagName('head')[0].appendChild(tag);
 }
 
-$(function () {
+$(function() {
     $elems = $('.js-gmap');
 
     if (typeof google === 'object' && typeof google.maps === 'object') {
