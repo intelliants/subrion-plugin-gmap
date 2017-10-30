@@ -66,9 +66,14 @@ $(function () {
         });
 
         intelli.geocoder.geocode({address: fullAddress}, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                intelli.marker.setPosition(results[0].geometry.location);
-                map.setCenter(results[0].geometry.location);
+            if (status === google.maps.GeocoderStatus.OK) {
+                var location = results[0].geometry.location;
+
+                intelli.marker.setPosition(location);
+                map.setCenter(location);
+
+                $('input[name="longitude"]', mapInfo).val(location.lng());
+                $('input[name="latitude"]', mapInfo).val(location.lat());
             }
         });
     });

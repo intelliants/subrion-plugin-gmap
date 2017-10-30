@@ -48,7 +48,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType()) {
 
     foreach ($data as $entry) {
         $itemName = $entry['item'];
-        $package = $iaItem->getModuleByItem($itemName);
+        $module = $iaItem->getModuleByItem($itemName);
 
         iaLanguage::addPhrase(sprintf('fieldgroup_%s_location', $entry['item']), 'Location');
 
@@ -71,7 +71,7 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType()) {
                         'name' => 'location',
                         'item' => $itemName,
                         'order' => $order,
-                        'module' => $package,
+                        'module' => $module,
                         'collapsed' => false,
                         'tabview' => true
                     ], null, iaField::getTableGroups());
