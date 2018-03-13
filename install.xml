@@ -4,13 +4,13 @@
     <summary>Makes possible to display the Google Map for listings</summary>
     <author>Intelliants LLC</author>
     <contributor>Intelliants LLC</contributor>
-    <version>4.1.0</version>
-    <date>2017-06-21</date>
-    <compatibility>4.1</compatibility>
+    <version>4.2.0</version>
+    <date>2018-03-13</date>
+    <compatibility>4.2</compatibility>
 
     <blocks>
         <block type="smarty" name="listings_on_map" title="Listings on Map"
-            header="0" position="verytop" sticky="0" filename="block.map"
+            header="0" position="verytop" sticky="0" filename="block.map.tpl"
             pages="realestate_index,realestate_search,realestate_index_my,yellowpages_index,ylocs_search,ylocs_change,top_venues,new_venues,random_venues,my_venues,ycategs_browse,members,view_member"><![CDATA[]]></block>
     </blocks>
 
